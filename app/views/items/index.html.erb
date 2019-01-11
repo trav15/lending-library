@@ -1,1 +1,4 @@
-HELLO
+<h2>Borrow These Items:</h2>
+<% @items.each do |item| %>
+  <h3><%= link_to item.name, item_path(item)%></h3>
+<% end %>
