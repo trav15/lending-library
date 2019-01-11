@@ -6,7 +6,7 @@ class LendsController < ApplicationController
       redirect_to items_path
     end
 
-    @lend = current_user.lends.find_or_instantiate_by(item: @item)
+    @lend = current_user.lends.find_or_initialize_by(item: @item)
     if @lend.update(lend_params)
       flash[:message] = "You have borrowed this item!"
       redirect_to item_path(@item)
