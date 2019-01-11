@@ -22,8 +22,12 @@
     <% end %>
   <br><br>
   <div class="container">
-    <%= flash[:message] if flash[:message]%>
-    <%= flash[:errors] if flash[:errors]%>
+    <% if flash[:message] %>
+      <div class="alert alert-success" role="alert"><%= flash[:message] %></div>
+    <% end %>
+    <% if flash[:errors] %>
+      <div class="alert alert-danger" role="alert"><%= flash[:errors] %></div>
+    <% end %>
     <%= yield %>
   </div>
   </body>
