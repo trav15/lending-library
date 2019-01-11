@@ -1,16 +1,14 @@
 Rails.application.routes.draw do
 
   root to: 'static#welcome'
-  
+
   resources :lends
   resources :items do
     resources :lends, only: [:create]
   end
 
   resources :users, only: [:new, :create, :show]
-
-  resources :sessions, only: [:new, :create, :destroy]
-
+  
   get '/signup', to: 'users#new'
   post '/signup', to: 'users#create'
 
