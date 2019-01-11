@@ -1,4 +1,7 @@
 class ItemsController < ApplicationController
+  before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :redirect_if_not_authorized, only: [:edit, :update, :destroy]
+
   def index
   end
 
@@ -9,6 +12,7 @@ class ItemsController < ApplicationController
   def create
     @item = Item.create(item_params)
     if @item.save
+      flash[message] = "Item successfully donated!  Thank you!"
       redirect_to item_path(@item)
     else
       render :new
@@ -16,14 +20,41 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
+  end
+
+  def edit
+    if @item.user = current_user
+    else
+      redirect_to '/items'
+  end
+
+  def update
+    if @item.update(item_params)
+      flash[:message] = "Item successfully updated!"
+      redirect_to item_path(@item)
+    else
+      render :edit
+    end
   end
 
   def destroy
+    @item.destroy
+    flash[:message] = "Item successfully removed!"
+    redirect_to items_path
   end
 
   private
   def item_params
     params.require(:item).permit(:name)
+  end
+
+  def set_item
+    @item = Item.find(params[:id])
+  end
+
+  def redirect_if_not_authorized!
+    if @item.user != current_user
+      redirect_to '/items'
+    end
   end
 end
