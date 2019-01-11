@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
       session[:user_id] = @user.id
       redirect_to root_path
     else
-      flash[:message] = "Something went wrong!"
+      flash[:errors] = "Something went wrong!"
       redirect_to login_path
     end
   end

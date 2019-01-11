@@ -23,7 +23,7 @@
   <br><br>
   <div class="container">
     <%= flash[:message] if flash[:message]%>
-
+    <%= flash[:errors] if flash[:errors]%>
     <%= yield %>
   </div>
   </body>

@@ -10,6 +10,7 @@ class UsersController < ApplicationController
       flash[:message] = "Successfully Signed Up!"
       redirect_to items_path
     else
+      flash[:errors] = "Could not create new account: #{@user.errors.full_messages.to_sentence}"
       render :new
     end
   end
