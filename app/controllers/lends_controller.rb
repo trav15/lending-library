@@ -1,6 +1,6 @@
 class LendsController < ApplicationController
   def create
-    @item = Item.find_by(params[:item_id])
+    @item = Item.find_by(id: params[:item_id])
     if !@item
       flash[:message] = "Item not found"
       redirect_to items_path
@@ -8,12 +8,14 @@ class LendsController < ApplicationController
 
     @lend = current_user.lends.find_or_initialize_by(item: @item)
     if @lend.update(lend_params)
-      flash[:message] = "You have borrowed this item!"
+      flash[:message] = "Congratulations! You have borrowed this item!"
+      @item[:available] = false
+      @item.save!
       redirect_to item_path(@item)
     else
       flash[:message] = "Sorry, something went wrong!"
+      redirect_to item_path(@item)
     end
-    redirect_to item_path(@item)
   end
 
   private

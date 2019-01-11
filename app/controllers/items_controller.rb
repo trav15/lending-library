@@ -18,7 +18,7 @@ class ItemsController < ApplicationController
   def create
     @item = Item.create(item_params)
     if @item.save
-      flash[:message] = "Item successfully donated!  Thank you!"
+      flash[:message] = "Item successfully donated! Thank you!"
       redirect_to item_path(@item)
     else
       render :new
@@ -53,7 +53,7 @@ class ItemsController < ApplicationController
 
   private
   def item_params
-    params.require(:item).permit(:name, :created_at)
+    params.require(:item).permit(:name, :created_at, :available)
   end
 
   def set_item
