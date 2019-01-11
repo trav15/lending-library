@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
 
   root to: 'static#welcome'
-
+  
+  resources :lends
   resources :items do
     resources :lends, only: [:create]
   end
