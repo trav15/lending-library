@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(version: 2019_01_11_005617) do
 
   create_table "items", force: :cascade do |t|
     t.string "name"
+    t.integer "donor_id"
     t.boolean "available"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
