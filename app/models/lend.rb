@@ -1,0 +1,2 @@
+class Lend < ApplicationRecord
+end
