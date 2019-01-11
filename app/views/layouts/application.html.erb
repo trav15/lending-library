@@ -10,7 +10,21 @@
   </head>
 
   <body>
-    <h1>LendingLibrary</h1>
+    <h1><%= link_to "Lending Library", root_path %></h1>
+
+    <% if logged_in? %>
+    <%= link_to "Borrow Item", items_path %> |
+    <%= link_to "Donate Item", new_item_path %> |
+    <%= link_to "Log Out", logout_path, method: :delete %>
+    <% else %>
+    <%= link_to "Sign Up", signup_path %> |
+    <%= link_to "Log In ", login_path %>
+    <% end %>
+  <br><br>
+  <div class="container">
+    <%= flash[:message] if flash[:message]%>
+
     <%= yield %>
+  </div>
   </body>
 </html>
