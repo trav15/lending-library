@@ -26,6 +26,7 @@ class ItemsController < ApplicationController
   end
 
   def show
+    @lend = Lend.new
   end
 
   def edit

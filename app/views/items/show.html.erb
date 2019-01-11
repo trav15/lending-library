@@ -1,2 +1,8 @@
 <h2><%= @item.name %></h2>
 <p>Added on <%= @item.created_at.in_time_zone("Eastern Time (US & Canada)").strftime("%B %e, %Y at %I:%M %p") %></p>
+
+<%= form_for [@item, @lend] do |f| %>
+<%= f.hidden_field :lend_date, value: Time.current %>
+<%= f.hidden_field :available, value: false %>
+<%= f.submit value: 'Borrow This Item' %>
+<% end %>

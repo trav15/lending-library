@@ -2,11 +2,11 @@ Rails.application.routes.draw do
 
   root to: 'items#index'
 
-  resources :items
-
-  resources :users, only: [:new, :create, :show] do
+  resources :items do
     resources :lends, only: [:create]
   end
+
+  resources :users, only: [:new, :create, :show] 
 
   resources :sessions, only: [:new, :create, :destroy]
 
