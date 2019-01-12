@@ -20,14 +20,20 @@ class ItemsController < ApplicationController
       flash[:message] = "Item successfully donated! Thank you!"
       redirect_to item_path(@item)
     else
-      render :new
+      render :news
     end
   end
 
   def show
-    @lends = Lend.where(item_id: @item.id)
-    @lend = current_user.lends.find_or_initialize_by(item: @item, return_date: nil)
-    @user = current_user
+    if !@item
+      flash[:errors] = "Item not found"
+      redirect_to items_path
+    else
+      set_item
+      @lends = Lend.where(item_id: @item.id)
+      @lend = current_user.lends.find_or_initialize_by(item: @item, return_date: nil)
+      @user = current_user
+    end
   end
 
   def edit

@@ -6,8 +6,11 @@
   <% status = "Borrowed" %>
   <% button_class = "badge-danger"%>
 <% end %>
-<span class="badge <%= button_class %>"><%= status %></span>
-
+<h3><span class="badge <%= button_class %>"><%= status %></span></h3>
+<br>
+<% if !@item.available? %>
+<p>Currently borrowed by <%= @lend.user.username %>.</p>
+<% end %>
 <p>Borrowed <%= @lends.length %> <%="time".pluralize(@lends.length)%>. Donated on <%= @item.created_at.in_time_zone("Eastern Time (US & Canada)").strftime("%B %e, %Y at %I:%M %p") %></p>
 
 <% if @item.available? %>
@@ -16,12 +19,14 @@
   <%= f.submit value: 'Borrow This Item'%>
   <% end %>
 <% elsif @lend.user.id == current_user.id %>
-  <%= form_for @lend do |f| %>
+  <%= form_for @lend, :url => {:controller => "lends", :action => "update"} do |f| %>
   <%= f.hidden_field :return_date, value: Time.current %>
+  <%= f.hidden_field :item_id, value: @lend.item_id %>
   <%= f.submit value: 'Return This Item' %>
   <% end %>
 <% else %>
 <% end %>
+
 <% if @item.donor_id == current_user.id %>
   <%= link_to "Edit Item", edit_item_path, class: "badge badge-secondary" %>
 <% end %>

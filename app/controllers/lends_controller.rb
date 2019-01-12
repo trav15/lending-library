@@ -14,7 +14,7 @@ class LendsController < ApplicationController
       redirect_to item_path(@item)
     else
       flash[:errors] = "Sorry, something went wrong!"
-      redirect_to item_path(@lend.item)
+      redirect_to item_path(@item)
     end
   end
 
@@ -37,6 +37,6 @@ class LendsController < ApplicationController
 
   private
   def lend_params
-    params.require(:lend).permit(:lend_date, :return_date)
+    params.require(:lend).permit(:lend_date, :return_date, :item_id)
   end
 end
