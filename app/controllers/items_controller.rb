@@ -13,6 +13,7 @@ class ItemsController < ApplicationController
 
   def new
     @item = Item.new
+    @user = current_user
   end
 
   def create
@@ -53,7 +54,7 @@ class ItemsController < ApplicationController
 
   private
   def item_params
-    params.require(:item).permit(:name, :created_at, :available)
+    params.require(:item).permit(:name, :created_at, :available, :donor_id)
   end
 
   def set_item

@@ -1,5 +1,6 @@
 <%= form_for @item do |f| %>
 <%= f.label :name %>
 <%= f.text_field :name %>
+<%= f.hidden_field :donor_id, value: @user.id %>
 <%= f.submit %>
 <% end %>
