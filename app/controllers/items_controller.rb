@@ -1,6 +1,8 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :redirect_if_not_logged_in!
   before_action :redirect_if_not_authorized!, only: [:edit, :destroy]
+
 
   def index
     if params[:user_id]
@@ -32,10 +34,6 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    if @item.user = current_user
-    else
-      redirect_to '/items'
-    end
   end
 
   def update
@@ -63,10 +61,12 @@ class ItemsController < ApplicationController
   end
 
   def redirect_if_not_authorized!
-    if @item.user != current_user
-      redirect_to '/items'
+    if @item.donor_id == current_user.id
+      @user = current_user
+      render :edit
     else
-      redirect_to '/edit'
+      flash[:errors] = "You are not authorized to edit this item"
+      redirect_to item_path(@item)
     end
   end
 end
