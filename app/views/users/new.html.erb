@@ -1,5 +1,5 @@
 <h2>Sign Up!</h2>
-
+<div class="form-group">
 <%= form_for @user, url: signup_path do |f| %>
 <%= f.label :username %>
 <div><%= f.text_field :username %></div>
@@ -8,7 +8,7 @@
 <div><%= f.password_field :password %></div>
 <%= f.label :password_confirmation %>
 <div><%= f.password_field :password_confirmation %></div>
-
-<%= f.submit %>
+</div>
+<%= f.submit%>
 
 <% end %>
