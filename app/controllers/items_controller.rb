@@ -27,6 +27,7 @@ class ItemsController < ApplicationController
   end
 
   def show
+    @lends = Lend.where(item_id: @item.id)
     @lend = current_user.lends.find_or_initialize_by(item: @item, return_date: nil)
   end
 

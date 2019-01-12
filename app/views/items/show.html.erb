@@ -8,7 +8,8 @@
 <% end %>
 <span class="badge <%= button_class %>"><%= status %></span>
 
-<p>Added on <%= @item.created_at.in_time_zone("Eastern Time (US & Canada)").strftime("%B %e, %Y at %I:%M %p") %></p>
+<p>Borrowed <%= @lends.length %> <%="time".pluralize(@lends.length)%>. Donated on <%= @item.created_at.in_time_zone("Eastern Time (US & Canada)").strftime("%B %e, %Y at %I:%M %p") %></p>
+
 
 <% if @item.available? %>
   <%= form_for [@item, @lend] do |f| %>
