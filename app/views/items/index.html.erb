@@ -1,4 +1,10 @@
 <h2>Borrow These Items:</h2>
-<% @items.each do |item| %>
-  <h3><%= link_to item.name, item_path(item)%></h3>
-<% end %>
+<ul><% @items.each do |item| %>
+  <li><%= link_to item.name, item_path(item)%></li>
+<% end %></ul>
+
+<br><br>
+<h4>Unavailable Items</h4>
+<ul><% @borrowed.each do |item| %>
+  <li><%= link_to item.name, item_path(item)%></li>
+<% end %></ul>

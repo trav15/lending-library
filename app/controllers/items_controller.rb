@@ -5,12 +5,8 @@ class ItemsController < ApplicationController
 
 
   def index
-    if params[:user_id]
-      @user = User.find_by(params[:used_id])
-      @items = @user.items
-    else
-      @items = Item.where(available: true)
-    end
+    @items = Item.where(available: true)
+    @borrowed = Item.where(available: false)
   end
 
   def new
@@ -31,6 +27,7 @@ class ItemsController < ApplicationController
   def show
     @lends = Lend.where(item_id: @item.id)
     @lend = current_user.lends.find_or_initialize_by(item: @item, return_date: nil)
+    @user = current_user
   end
 
   def edit
