@@ -27,7 +27,7 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @lend = Lend.new
+    @lend = current_user.lends.find_or_initialize_by(item: @item, return_date: nil)
   end
 
   def edit
