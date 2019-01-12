@@ -9,8 +9,7 @@ class LendsController < ApplicationController
     @lend = current_user.lends.find_or_initialize_by(item: @item)
     if @lend.update(lend_params)
       flash[:message] = "Congratulations! You have borrowed this item!"
-      @item[:available] = false
-      @item.save!
+      @lend.item.update(available: false)
       redirect_to item_path(@item)
     else
       flash[:errors] = "Sorry, something went wrong!"
@@ -26,6 +25,7 @@ class LendsController < ApplicationController
   def update
     @lend = Lend.find_by(id: params[:id])
     if @lend.update(lend_params)
+      @lend.item.update(available: true)
       flash[:message] = "Item successfully returned!"
       redirect_to user_lends_path(user_id: params[:id])
     else
