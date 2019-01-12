@@ -34,6 +34,7 @@ class ItemsController < ApplicationController
   end
 
   def edit
+    render :edit
   end
 
   def update
@@ -63,7 +64,6 @@ class ItemsController < ApplicationController
   def redirect_if_not_authorized!
     if @item.donor_id == current_user.id
       @user = current_user
-      render :edit
     else
       flash[:errors] = "You are not authorized to edit this item"
       redirect_to item_path(@item)

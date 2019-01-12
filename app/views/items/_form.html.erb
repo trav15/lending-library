@@ -4,4 +4,11 @@
 <%= f.hidden_field :donor_id, value: @user.id %>
 <%= f.hidden_field :available, value: true %>
 <%= f.submit %>
+<% end%>
+
+<% if @user == current_user %>
+<%= form_for @item, method: :delete do |f| %>
+<%= f.submit :value => "Delete" %>
+<% end %>
+<% else %>
 <% end %>
