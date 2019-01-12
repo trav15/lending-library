@@ -2,6 +2,6 @@
 <%= f.label :name %>
 <%= f.text_field :name %>
 <%= f.hidden_field :donor_id, value: @user.id %>
-<%= f.hidden_field :available, value: false %>
+<%= f.hidden_field :available, value: true %>
 <%= f.submit %>
 <% end %>
