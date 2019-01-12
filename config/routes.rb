@@ -7,7 +7,10 @@ Rails.application.routes.draw do
     resources :lends, only: [:create]
   end
 
-  resources :users, only: [:show]
+  resources :users, only: [:show] do
+    resources :lends, only: [:index]
+  end
+
 
   get '/signup', to: 'users#new'
   post '/signup', to: 'users#create'

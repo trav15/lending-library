@@ -18,6 +18,11 @@ class LendsController < ApplicationController
     end
   end
 
+  def index
+    @user = current_user
+    @lends = Lend.where(user_id: @user.id)
+  end
+
   private
   def lend_params
     params.require(:lend).permit(:lend_date)

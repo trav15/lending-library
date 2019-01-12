@@ -17,7 +17,6 @@ class UsersController < ApplicationController
 
   def show
     @user = current_user
-    @lends = Lend.where(user_id: @user.id)
   end
 
   private
