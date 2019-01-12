@@ -7,7 +7,7 @@ class ItemsController < ApplicationController
       @user = User.find_by(params[:used_id])
       @items = @user.items
     else
-      @items = Item.all
+      @items = Item.where(available: true)
     end
   end
 

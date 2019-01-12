@@ -1,18 +1,25 @@
 <h2><%= @item.name %></h2>
 <% if @item.available? %>
-<% status = "Available To Borrow"%>
-<% button_class = "badge-success"%>
+  <% status = "Available To Borrow"%>
+  <% button_class = "badge-success"%>
 <% else %>
-<% status = "Not Available" %>
-<% button_class = "badge-danger"%>
+  <% status = "Borrowed" %>
+  <% button_class = "badge-secondary"%>
 <% end %>
 <span class="badge <%= button_class %>"><%= status %></span>
 
 <p>Added on <%= @item.created_at.in_time_zone("Eastern Time (US & Canada)").strftime("%B %e, %Y at %I:%M %p") %></p>
 
-<%= form_for [@item, @lend] do |f| %>
-<%= f.hidden_field :lend_date, value: Time.current %>
-<%= f.submit value: 'Borrow This Item' %>
+<% if @item.available? %>
+  <%= form_for [@item, @lend] do |f| %>
+  <%= f.hidden_field :lend_date, value: Time.current %>
+  <%= f.submit value: 'Borrow This Item' %>
+  <% end %>
+<% else %>
+  <%= form_for @lend do |f| %>
+  <%= f.hidden_field :return_date, value: Time.current %>
+  <%= f.submit value: 'Return This Item' %>
+  <% end %>
 <% end %>
 
 <br><br>
