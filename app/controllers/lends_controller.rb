@@ -20,7 +20,7 @@ class LendsController < ApplicationController
 
   def index
     @user = current_user
-    @lends = Lend.where(user_id: @user.id)
+    @lends = Lend.where(user_id: @user.id).where(return_date: nil).all
   end
 
   private
