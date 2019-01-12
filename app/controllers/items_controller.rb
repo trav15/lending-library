@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
-  before_action :redirect_if_not_authorized!, only: [:edit, :update, :destroy]
+  before_action :redirect_if_not_authorized!, only: [:edit, :destroy]
 
   def index
     if params[:user_id]

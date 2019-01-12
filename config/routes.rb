@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: [:show] do
-    resources :lends, only: [:index]
+    resources :lends, only: [:index, :update]
   end
 
 
