@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   root to: 'static#welcome'
 
+  get '/auth/facebook/callback' => 'sessions#create'
+
   resources :lends
   resources :items do
     resources :lends, only: [:create]
