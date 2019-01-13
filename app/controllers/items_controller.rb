@@ -5,8 +5,8 @@ class ItemsController < ApplicationController
 
 
   def index
-    @items = Item.where(available: true)
-    @borrowed = Item.where(available: false)
+    @items = Item.is_available
+    @borrowed = Item.is_borrowed
   end
 
   def new
@@ -29,9 +29,9 @@ class ItemsController < ApplicationController
       flash[:errors] = "Item not found"
       redirect_to items_path
     else
-      @loans = Loan.where(item_id: @item.id)
+      @loans = Loan.item_loans(@item)
       @loan = current_user.loans.find_or_initialize_by(item: @item, return_date: nil)
-      @loaner = @loans.where(return_date: nil)
+      @loaner = @loans.current_loan
       @user = current_user
     end
   end

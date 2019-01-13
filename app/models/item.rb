@@ -9,4 +9,12 @@ class Item < ApplicationRecord
     where(donor_id: user.id)
   end
 
+  def self.is_available
+    where(available: true)
+  end
+
+  def self.is_borrowed
+    where(available: false)
+  end
+
 end
