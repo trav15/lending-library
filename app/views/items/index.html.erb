@@ -1,10 +1,10 @@
 <h2>Borrow These Items:</h2>
-<ul><% @items.each do |item| %>
-  <li><%= link_to item.name, item_path(item)%></li>
+<ul class="list-group w-50"><% @items.each do |item| %>
+  <li class="list-group-item"><%= link_to item.name, item_path(item)%></li>
 <% end %></ul>
 
 <br><br>
 <h4>Unavailable Items</h4>
-<ul><% @borrowed.each do |item| %>
-  <li><%= link_to item.name, item_path(item)%></li>
+<ul class="list-group w-50"><% @borrowed.each do |item| %>
+  <li class="list-group-item"><%= link_to item.name, item_path(item)%></li>
 <% end %></ul>

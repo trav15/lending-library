@@ -23,6 +23,11 @@ nav .navbar-nav li a{
   color: white !important;
 }
 
+.navbar {
+  background: rgb(0,62,125);
+  background: linear-gradient(180deg, rgba(0,62,125,1) 0%, rgba(0,212,255,1) 100%);
+}
+
 .field_with_errors{
   + br {
     display: none;
