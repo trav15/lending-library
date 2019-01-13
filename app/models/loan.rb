@@ -8,4 +8,8 @@ class Loan < ApplicationRecord
   def self.user_loans(user)
     where(user_id: user.id)
   end
+
+  def self.current_user_loans(user)
+    where(user_id: user.id).where(return_date: nil).all
+  end
 end

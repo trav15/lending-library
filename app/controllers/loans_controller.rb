@@ -20,7 +20,7 @@ class LoansController < ApplicationController
 
   def index
     @user = current_user
-    @loans = Loan.where(user_id: @user.id).where(return_date: nil).all
+    @loans = Loan.current_user_loans(@user)
   end
 
   def update
