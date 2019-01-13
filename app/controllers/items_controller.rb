@@ -30,8 +30,8 @@ class ItemsController < ApplicationController
       redirect_to items_path
     else
       set_item
-      @lends = Lend.where(item_id: @item.id)
-      @lend = current_user.lends.find_or_initialize_by(item: @item, return_date: nil)
+      @loans = Loan.where(item_id: @item.id)
+      @loan = current_user.loans.find_or_initialize_by(item: @item, return_date: nil)
       @user = current_user
     end
   end

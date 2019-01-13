@@ -20,19 +20,20 @@ ActiveRecord::Schema.define(version: 2019_01_11_005617) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "lends", force: :cascade do |t|
+  create_table "loans", force: :cascade do |t|
     t.integer "user_id"
     t.integer "item_id"
-    t.datetime "lend_date"
+    t.datetime "loan_date"
     t.datetime "return_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["item_id"], name: "index_lends_on_item_id"
-    t.index ["user_id"], name: "index_lends_on_user_id"
+    t.index ["item_id"], name: "index_loans_on_item_id"
+    t.index ["user_id"], name: "index_loans_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "username"
+    t.string "email"
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

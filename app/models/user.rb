@@ -1,8 +1,8 @@
 class User < ApplicationRecord
   has_secure_password
 
-  has_many :lends
-  has_many :items, through: :lends
+  has_many :loans
+  has_many :items, through: :loans
 
   validates :username, presence: true, uniqueness: {case_sensitive: :false}
 

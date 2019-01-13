@@ -9,19 +9,19 @@
 <h3><span class="badge <%= button_class %>"><%= status %></span></h3>
 <br>
 <% if !@item.available? %>
-<p>Currently borrowed by <%= @lend.user.username %>.</p>
+<p>Currently borrowed by <%= @loan.user.username %>.</p>
 <% end %>
-<p>Borrowed <%= @lends.length %> <%="time".pluralize(@lends.length)%>. Donated on <%= @item.created_at.in_time_zone("Eastern Time (US & Canada)").strftime("%B %e, %Y at %I:%M %p") %></p>
+<p>Borrowed <%= @loans.length %> <%="time".pluralize(@loans.length)%>. Donated on <%= @item.created_at.in_time_zone("Eastern Time (US & Canada)").strftime("%B %e, %Y at %I:%M %p") %></p>
 
 <% if @item.available? %>
-  <%= form_for [@item, @lend] do |f| %>
-  <%= f.hidden_field :lend_date, value: Time.current %>
+  <%= form_for [@item, @loan] do |f| %>
+  <%= f.hidden_field :loan_date, value: Time.current %>
   <%= f.submit value: 'Borrow This Item'%>
   <% end %>
-<% elsif @lend.user.id == current_user.id %>
-  <%= form_for @lend, :url => {:controller => "lends", :action => "update"} do |f| %>
+<% elsif @loan.user.id == current_user.id %>
+  <%= form_for @loan, :url => {:controller => "loans", :action => "update"} do |f| %>
   <%= f.hidden_field :return_date, value: Time.current %>
-  <%= f.hidden_field :item_id, value: @lend.item_id %>
+  <%= f.hidden_field :item_id, value: @loan.item_id %>
   <%= f.submit value: 'Return This Item' %>
   <% end %>
 <% else %>
