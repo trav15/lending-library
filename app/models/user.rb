@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :items, through: :loans
 
   validates :username, presence: true, uniqueness: {case_sensitive: :false}
+  validates :password, length: { in: 3..20 }
 
   def self.find_or_create_by_omniauth(auth)
     oauth_username = auth["info"]["nickname"] || auth["info"]["name"]
