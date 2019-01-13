@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_many :loans
   has_many :items, through: :loans
 
-  validates :username, presence: true, uniqueness: {case_sensitive: :false}
+  validates :username, presence: true, uniqueness: {case_sensitive: :false}, length: { in: 3..20 }
   validates :password, length: { in: 3..20 }
 
   def self.find_or_create_by_omniauth(auth)
@@ -13,4 +13,5 @@ class User < ApplicationRecord
       user.password = SecureRandom.hex
     end
   end
+
 end

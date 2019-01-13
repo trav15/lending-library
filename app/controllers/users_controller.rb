@@ -17,8 +17,8 @@ class UsersController < ApplicationController
 
   def show
     @user = current_user
-    @donation_count = Item.where(donor_id: @user.id).length
-    @loan_count = Loan.where(user_id: @user.id).length
+    @donation_count = Item.user_donations(@user).length
+    @loan_count = Loan.user_loans(@user).length
   end
 
   private

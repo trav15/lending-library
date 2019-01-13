@@ -4,4 +4,9 @@ class Item < ApplicationRecord
 
   validates :name, presence: true
 
+
+  def self.user_donations(user)
+    where(donor_id: user.id)
+  end
+
 end
