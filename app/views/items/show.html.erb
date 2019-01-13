@@ -9,7 +9,7 @@
 <h3><span class="badge <%= button_class %>"><%= status %></span></h3>
 <br>
 <% if !@item.available? %>
-<p>Currently borrowed by <%= @loan.user.username %>.</p>
+<p>Currently borrowed by <%= @loaner.first.user.username %>.</p>
 <% end %>
 <p>Borrowed <%= @loans.length %> <%="time".pluralize(@loans.length)%>. Donated on <%= @item.created_at.in_time_zone("Eastern Time (US & Canada)").strftime("%B %e, %Y at %I:%M %p") %></p>
 
