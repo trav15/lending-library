@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 2019_01_11_005617) do
     t.integer "item_id"
     t.datetime "loan_date"
     t.datetime "return_date"
+    t.string "used_for"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["item_id"], name: "index_loans_on_item_id"
