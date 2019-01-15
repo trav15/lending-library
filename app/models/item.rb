@@ -4,17 +4,12 @@ class Item < ApplicationRecord
 
   validates :name, presence: true
 
+  scope :is_available, -> {where(available: true)}
+  scope :is_borrowed, -> {where(available: false)}
+
 
   def self.user_donations(user)
     where(donor_id: user.id)
-  end
-
-  def self.is_available
-    where(available: true)
-  end
-
-  def self.is_borrowed
-    where(available: false)
   end
 
 end
