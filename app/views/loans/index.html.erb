@@ -8,8 +8,8 @@
   <% @loans.each do |loan| %>
   <div class="card w-50">
     <div class="card-body">
-      <h4><%= loan.item.name %></h4>
-      <p>Borrowed on <%= loan.loan_date.in_time_zone("Eastern Time (US & Canada)").strftime("%B %e, %Y at %I:%M %p") %></p>
+      <h4><%= link_to loan.item.name, item_path(loan.item.id) %></h4>
+      <p>Borrowed on <%= loan.loan_date.in_time_zone("Eastern Time (US & Canada)").strftime("%B %e, %Y at %I:%M %p") %>. Using for <%= loan.used_for %>.</p>
       <%= form_for [loan] do |f| %>
       <%= f.hidden_field :return_date, value: Time.current %>
       <%= f.hidden_field :id, value: loan.id %>
