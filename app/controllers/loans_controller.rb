@@ -32,7 +32,7 @@ class LoansController < ApplicationController
   end
 
   def update
-    @loan = Loan.find_by(id: params[:id])
+    @loan = Loan.find_by(id: params[:loan][:id])
     if @loan.update(loan_params)
       @loan.item.update(available: true)
       flash[:message] = "Item successfully returned!"
