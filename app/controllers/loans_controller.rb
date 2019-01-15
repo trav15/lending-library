@@ -1,13 +1,21 @@
 class LoansController < ApplicationController
-  def create
+  def new
+    @loan = Loan.new
     @item = Item.find_by(id: params[:item_id])
     if !@item
       flash[:errors] = "Item not found"
       redirect_to items_path
+    elsif @item.available == false
+      flash[:errors] = "Item not available to borrow"
+      redirect_to items_path
     end
+  end
 
-    @loan = current_user.loans.find_or_initialize_by(item: @item, return_date: nil)
-    if @loan.update(loan_params)
+  def create
+    @item = Item.find_by(id: params[:loan][:item_id])
+    @loan = current_user.loans.find_or_initialize_by(item_id: params[:item_id], return_date: nil)
+    @loan.update(loan_params)
+    if @loan.save
       flash[:message] = "Congratulations! You have borrowed this item!"
       @loan.update(return_date: nil)
       @loan.item.update(available: false)
@@ -37,6 +45,6 @@ class LoansController < ApplicationController
 
   private
   def loan_params
-    params.require(:loan).permit(:loan_date, :return_date, :item_id)
+    params.require(:loan).permit(:loan_date, :return_date, :item_id, :used_for)
   end
 end

@@ -2,8 +2,8 @@
 <% if @loans.length == 0 %>
   <h4>No current loans</h4>
   <br>
-  <p><%= link_to "Borrow Something", items_path %></p>
-  <p><%= link_to "Donate Something", new_item_path %></p>
+  <p><%= link_to "Borrow Something", items_path, class:"btn btn-primary" %></p>
+  <p><%= link_to "Donate Something", new_item_path, class:"btn btn-primary" %></p>
 <% else %>
   <% @loans.each do |loan| %>
   <div class="card w-50">

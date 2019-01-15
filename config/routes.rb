@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: [:show] do
-    resources :loans, only: [:index, :update]
+    resources :loans, only: [:new, :index, :update]
   end
 
 
