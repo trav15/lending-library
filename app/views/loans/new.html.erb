@@ -1,0 +1,12 @@
+<div class="card w-50">
+  <div class="card-body">
+    <h3>Borrowing <%= @item.name %></h3>
+      <%= form_for @loan do |f| %>
+      <%= f.hidden_field :loan_date, value: Time.current %>
+      <%= f.hidden_field :item_id, value: @item.id %>
+      <%= f.label "Using for" %>
+      <%= f.text_field :used_for %><br>
+      <%= f.submit value: 'Borrow This Item'%>
+      <% end %>
+  </div>
+</div>
