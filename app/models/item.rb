@@ -12,4 +12,8 @@ class Item < ApplicationRecord
     where(donor_id: user.id)
   end
 
+  def self.by_popularity
+    self.all.sort_by {|item| item.loans.length}
+  end
+
 end

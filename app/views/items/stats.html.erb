@@ -1,0 +1,5 @@
+<h2>All Items</h2>
+<div class="list-group w-50"><% @items.each do |item| %>
+  <%= link_to "#{item.name} - Borrowed:  #{item.loans.length} times", item_path(item), class:"list-group-item list-group-item-action" %> 
+<% end %>
+</div>

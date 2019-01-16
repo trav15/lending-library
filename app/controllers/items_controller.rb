@@ -55,6 +55,10 @@ class ItemsController < ApplicationController
     redirect_to items_path
   end
 
+  def stats
+    @items = Item.by_popularity.reverse
+  end
+
   private
   def item_params
     params.require(:item).permit(:name, :created_at, :available, :donor_id)
