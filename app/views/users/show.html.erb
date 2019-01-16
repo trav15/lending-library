@@ -2,7 +2,7 @@
   <div class="card-body">
     <h2 class="card-title"><%= @user.username%>'s Profile</h2>
     <p class="card-text">Donated <%= @donation_count %> <%="item".pluralize(@donation_count)%></p>
-    <p class="card-text">Borrowed <%= @loan_count %> <%="item".pluralize(@loan_count)%></p>
+    <p class="card-text">Borrowed <%= @user.loans.length %> <%="item".pluralize(@user.loans.length)%></p>
     <%= link_to "Current Loans", user_loans_path(@user), class:"btn btn-primary" %>
   </div>
 </div>

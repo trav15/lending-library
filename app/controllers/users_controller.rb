@@ -19,7 +19,6 @@ class UsersController < ApplicationController
     if current_user.id.to_s == params[:id]
       @user = current_user
       @donation_count = Item.user_donations(@user).length
-      @loan_count = Loan.user_loans(@user).length
     else
       flash[:errors] = "You are not authorized to view that page"
       redirect_to items_path
