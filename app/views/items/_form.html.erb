@@ -3,7 +3,11 @@
 <%= f.text_field :name %>
 <%= f.hidden_field :donor_id, value: @user.id %>
 <%= f.hidden_field :available, value: true %><br>
+<% if params[:action] == "edit" %>
+<%= f.submit :value => "Edit Item" %>
+<% else %>
 <%= f.submit :value => "Donate Item" %>
+<% end %>
 <% end%>
 
 <% if @user == current_user && @item.id != nil %>
