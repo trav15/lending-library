@@ -15,7 +15,7 @@
     <p>Borrowed <%= @loans.length %> <%="time".pluralize(@loans.length)%>. Donated on <%= @item.created_at.in_time_zone("Eastern Time (US & Canada)").strftime("%B %e, %Y at %I:%M %p") %></p>
 
     <% if @item.available? %>
-      <%= link_to "Borrow Item", new_user_loan_path(@user, item_id: @item.id), class: "badge badge-success" %><br>
+      <%= link_to "Borrow Item", new_item_loan_path(@item), class: "badge badge-success" %><br>
     <% elsif @loaner.first.user.id == current_user.id %>
       <%= form_for @loan, :url => {:controller => "loans", :action => "update"} do |f| %>
       <%= f.hidden_field :id, value: @loan.id %>
