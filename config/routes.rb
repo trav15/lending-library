@@ -4,9 +4,11 @@ Rails.application.routes.draw do
 
   get '/auth/facebook/callback' => 'sessions#create'
 
+  get '/items/stats', to: 'items#stats'
+
   resources :loans
   resources :items do
-    resources :loans, only: [:create]
+    resources :loans, only: [:new, :create]
   end
 
   resources :users, only: [:show] do
