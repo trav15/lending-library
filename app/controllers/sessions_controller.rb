@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
       flash[:message] = "Successfully logged in via Facebook!"
       redirect_to root_path
     else
-      @user = User.find_by_or_create_by(username: params[:username])
+      @user = User.find_or_create_by(username: params[:username])
       if @user && @user.authenticate(params[:password])
         session[:user_id] = @user.id
         flash[:message] = "Successfully logged in!"
