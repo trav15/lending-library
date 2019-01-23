@@ -1,6 +1,6 @@
 <div class="card w-50">
   <div class="card-body">
-    <h2><%= @item.name %></h2>
+    <h2 class="itemName"><%= @item.name %></h2>
     <% if @item.available? %>
       <% status = "Available To Borrow"%>
       <% button_class = "badge-success"%>
@@ -12,7 +12,8 @@
     <% if !@item.available? %>
     <p>Currently borrowed by <%= @loaner.first.user.username %>. Using for <%= @loaner.first.used_for %>.</p>
     <% end %>
-    <p>Borrowed <%= @loans.length %> <%="time".pluralize(@loans.length)%>. Donated on <%= @item.created_at.in_time_zone("Eastern Time (US & Canada)").strftime("%B %e, %Y at %I:%M %p") %></p>
+    <p>Borrowed <%= @loans.length %> <%="time".pluralize(@loans.length)%>.</p>
+    <p class="donatedOn">Donated on <%= @item.created_at.in_time_zone("Eastern Time (US & Canada)").strftime("%B %e, %Y at %I:%M %p") %></p>
 
     <% if @item.available? %>
       <%= link_to "Borrow Item", new_item_loan_path(@item), class: "badge badge-success" %><br>
@@ -30,6 +31,22 @@
       <%= link_to "Edit Item", edit_item_path, class: "badge badge-secondary" %>
     <% end %>
     <br>
+    <button class="badge badge-secondary js-next" data-id="<%=@item.id%>">Next Item</button>
+    <br>
     <%= link_to " All Items", items_path, class: "badge badge-secondary" %>
   </div>
-</div
+</div>
+
+<script>
+  $(function () {
+    $(".js-next").on("click", function() {
+      alert("this is working");
+      var nextId = parseInt($(".js-next").attr("data-id")) + 1;
+      $.get("/items/" + nextId + ".json", function(data) {
+        $(".itemName").text(data["name"]);
+        $(".donatedOn").text(data["created_at"]);
+        $(".js-next").attr("data-id", data["id"]);
+      });
+    });
+  });
+</script>
