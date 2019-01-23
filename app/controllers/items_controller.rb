@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_item, only: [:show, :edit, :update, :destroy, :next]
   before_action :redirect_if_not_logged_in!
   before_action :redirect_if_not_authorized!, only: [:edit, :destroy]
 
@@ -8,7 +8,7 @@ class ItemsController < ApplicationController
     @items = Item.is_available
     @borrowed = Item.is_borrowed
     respond_to do |format|
-      format.html { render :show }
+      format.html { render :index }
       format.json { render json: @items}
     end
   end
@@ -26,6 +26,11 @@ class ItemsController < ApplicationController
     else
       render :news
     end
+  end
+
+  def next
+    @next_item = @item.next
+    render json: @next_item
   end
 
   def show

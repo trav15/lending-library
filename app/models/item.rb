@@ -16,4 +16,13 @@ class Item < ApplicationRecord
     self.all.sort_by {|item| item.loans.length}
   end
 
+  def next
+    item = Item.where("id > ?", id).first
+    if item
+      item
+    else
+      Item.first
+    end
+  end
+
 end
