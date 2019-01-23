@@ -29,6 +29,7 @@ class ItemsController < ApplicationController
       flash[:errors] = "Item not found"
       redirect_to items_path
     else
+      render json: @item.to_json(only: [:name, :id, :created_at])
       @loans = Loan.item_loans(@item)
       @loan = current_user.loans.find_or_initialize_by(item: @item, return_date: nil)
       @loaner = @loans.current_loan
