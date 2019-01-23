@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     resources :loans, only: [:new, :index, :update]
   end
 
+  get '/items/:id/next', to: 'items#next'
 
   get '/signup', to: 'users#new'
   post '/signup', to: 'users#create'

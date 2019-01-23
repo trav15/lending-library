@@ -22,6 +22,7 @@ $(() => {
 })
 
 const bindClickHandlers = () => {
+  //item index
   $('.all-items').on('click', (e) => {
     e.preventDefault();
     history.pushState(null, null, "items")
@@ -36,7 +37,7 @@ const bindClickHandlers = () => {
         })
       })
   })
-
+  //show item
   $(document).on('click', '.show-link', function(e) {
     e.preventDefault();
     let id = $(this).attr('data-id')
@@ -46,6 +47,20 @@ const bindClickHandlers = () => {
       .then(item => {
       $('.app-container').html('')
       let newItem = new Item(item)
+      let itemHtml = newItem.formatShow()
+      $('.app-container').append(itemHtml)
+    })
+  })
+  //next item
+  $(document).on('click', '.next-item', function(e) {
+    e.preventDefault();
+    let id = $(this).attr('data-id');
+    fetch(`/items/${id}/next`)
+      .then(res => res.json())
+      .then(item => {
+      $('.app-container').html('')
+      let newItem = new Item(item)
+      history.pushState(null, null, `../items/${item.id}`)
       let itemHtml = newItem.formatShow()
       $('.app-container').append(itemHtml)
     })
@@ -69,6 +84,7 @@ Item.prototype.formatIndex = function() {
 Item.prototype.formatShow = function() {
   let itemHtml = `
     <h3>${this.name}</h3>
+    <button data-id="${this.id}" class="next-item">Next Item</button>
   `
   return itemHtml
 }
