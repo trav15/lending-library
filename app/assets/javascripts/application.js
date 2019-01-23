@@ -25,7 +25,7 @@ const bindClickHandlers = () => {
   $('.all-items').on('click', (e) => {
     e.preventDefault();
     history.pushState(null, null, "items")
-    fetch('/items.json ')
+    fetch('/items.json')
       .then(res => res.json())
       .then(items => {
         $('.app-container').html('')
@@ -35,6 +35,20 @@ const bindClickHandlers = () => {
           $('.app-container').append(itemHtml)
         })
       })
+  })
+
+  $(document).on('click', '.show-link', function(e) {
+    e.preventDefault();
+    let id = $(this).attr('data-id')
+    history.pushState(null, null, `items/${id}`)
+    fetch(`/items/${id}.json`)
+      .then(res => res.json())
+      .then(item => {
+      $('.app-container').html('')
+      let newItem = new Item(item)
+      let itemHtml = newItem.formatShow()
+      $('.app-container').append(itemHtml)
+    })
   })
 }
 
@@ -47,7 +61,14 @@ function Item(item) {
 
 Item.prototype.formatIndex = function() {
   let itemHtml = `
-    <a href="/items/${this.id}" class="list-group-item list-group-item-action">${this.name}</h1>
+    <a href="/items/${this.id}" data-id="${this.id}" class="show-link list-group-item list-group-item-action">${this.name}</h1>
+  `
+  return itemHtml
+}
+
+Item.prototype.formatShow = function() {
+  let itemHtml = `
+    <h3>${this.name}</h3>
   `
   return itemHtml
 }
