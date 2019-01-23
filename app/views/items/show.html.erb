@@ -1,6 +1,7 @@
 <div class="card w-50">
   <div class="card-body">
     <h2 class="itemName"><%= @item.name %></h2>
+    <p hidden class="available"><% @item.available %></p>
     <% if @item.available? %>
       <% status = "Available To Borrow"%>
       <% button_class = "badge-success"%>
@@ -40,11 +41,12 @@
 <script>
   $(function () {
     $(".js-next").on("click", function() {
-      alert("this is working");
       var nextId = parseInt($(".js-next").attr("data-id")) + 1;
       $.get("/items/" + nextId + ".json", function(data) {
         $(".itemName").text(data["name"]);
         $(".donatedOn").text(data["created_at"]);
+        $(".available").text(data["available"]);
+        debugger;
         $(".js-next").attr("data-id", data["id"]);
       });
     });
