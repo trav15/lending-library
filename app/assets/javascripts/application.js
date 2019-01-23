@@ -82,8 +82,16 @@ Item.prototype.formatIndex = function() {
 }
 
 Item.prototype.formatShow = function() {
+  let itemAvailablity = ''
+  if (this.available == true) {
+    itemAvailablity = '<span class="badge badge-success">Available To Borrow</span>'
+  }
+  else {
+    itemAvailablity = '<span class="badge badge-danger">Borrowed</span>'
+  }
   let itemHtml = `
     <h3>${this.name}</h3>
+    ${itemAvailablity}<br>
     <button data-id="${this.id}" class="next-item">Next Item</button>
   `
   return itemHtml
