@@ -7,6 +7,10 @@ class ItemsController < ApplicationController
   def index
     @items = Item.is_available
     @borrowed = Item.is_borrowed
+    respond_to do |format|
+      format.html { render :show }
+      format.json { render json: @items}
+    end
   end
 
   def new

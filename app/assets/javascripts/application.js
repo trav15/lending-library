@@ -15,3 +15,39 @@
 //= require activestorage
 //= require turbolinks
 //= require_tree .
+//= require items
+
+$(() => {
+  bindClickHandlers();
+})
+
+const bindClickHandlers = () => {
+  $('.all-items').on('click', (e) => {
+    e.preventDefault();
+    history.pushState(null, null, "items")
+    fetch('/items.json ')
+      .then(res => res.json())
+      .then(items => {
+        $('.app-container').html('')
+        items.forEach((item) => {
+          let newItem = new Item(item)
+          let itemHtml = newItem.formatIndex()
+          $('.app-container').append(itemHtml)
+        })
+      })
+  })
+}
+
+function Item(item) {
+  this.id = item.id
+  this.name = item.name
+  this.available = item.available
+  this.created_at = item.created_at
+}
+
+Item.prototype.formatIndex = function() {
+  let itemHtml = `
+    <a href="/items/${this.id}" class="list-group-item list-group-item-action">${this.name}</h1>
+  `
+  return itemHtml
+}
