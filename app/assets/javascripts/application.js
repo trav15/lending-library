@@ -60,6 +60,20 @@ const bindClickHandlers = () => {
       $('.app-container').append(itemHtml)
     })
   })
+  //show item loans
+  $(document).on('click', '.loan-history', function(e) {
+    e.preventDefault();
+    let id = $(this).attr('data-id')
+    fetch(`/items/${id}.json`)
+    .then(res => res.json())
+    .then(items => {
+    items.loans.forEach((loan) => {
+      let newLoan = new Loan(loan)
+      let loanHtml = newLoan.formatLoans()
+      $('.app-container').append(loanHtml)
+    })
+  })
+  })
 }
 
 function Item(item) {
@@ -67,7 +81,12 @@ function Item(item) {
   this.name = item.name
   this.available = item.available
   this.created_at = item.created_at
-  this.loan_count = item.loans.length
+  this.loans = item.loans
+}
+
+function Loan(loan) {
+  this.used_for = loan.used_for
+  this.return_date = loan.return_date
 }
 
 Item.prototype.formatIndex = function() {
@@ -88,8 +107,16 @@ Item.prototype.formatShow = function() {
   let itemHtml = `
     <h3>${this.name}</h3>
     ${itemAvailablity}<br>
-    <p>Times borrowed: ${this.loan_count}</p><br>
+    <p>Times borrowed: ${this.loans.length}</p>
+    <button data-id="${this.id}" class="loan-history badge badge-secondary">Show Loan History</button><br>
     <button data-id="${this.id}" class="next-item badge badge-secondary">Next Item</button>
   `
   return itemHtml
+}
+
+Loan.prototype.formatLoans = function() {
+  let loanHtml = `
+    <p class="list-group-item list-group-item-action">Returned ${this.return_date.replace(/(\d{4})\-(\d{2})\-(\d{2}).*/, '$2-$3-$1')}. Used for ${this.used_for}.</p>
+  `
+  return loanHtml
 }
