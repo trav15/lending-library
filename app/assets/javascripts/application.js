@@ -40,9 +40,9 @@ const bindClickHandlers = () => {
     let id = $(this).attr('data-id')
     fetch(`/items/${id}.json`)
       .then(res => res.json())
-      .then(item => {
+      .then(data => {
       $('.app-container').html('')
-      let newItem = new Item(item)
+      let newItem = new Item(data['item'], data['loans'])
       let itemHtml = newItem.formatShow()
       $('.app-container').append(itemHtml)
     })
@@ -53,9 +53,9 @@ const bindClickHandlers = () => {
     let id = $(this).attr('data-id');
     fetch(`/items/${id}/next`)
       .then(res => res.json())
-      .then(item => {
+      .then(data => {
       $('.app-container').html('')
-      let newItem = new Item(item)
+      let newItem = new Item(data['item'], data['loans'])
       let itemHtml = newItem.formatShow()
       $('.app-container').append(itemHtml)
     })
@@ -66,10 +66,10 @@ const bindClickHandlers = () => {
     let id = $(this).attr('data-id')
     fetch(`/items/${id}.json`)
     .then(res => res.json())
-    .then(item => {
+    .then(data => {
       $('.button-container').html('')
-      let thisItem = new Item(item)
-      item.loans.forEach((loan) => {
+      let thisItem = new Item(data['item'], data['loans'])
+      data['loans'].forEach((loan) => {
         let newLoan = new Loan(loan)
         let loanHtml = newLoan.formatLoans()
         $('.button-container').append(loanHtml)
@@ -84,9 +84,9 @@ const bindClickHandlers = () => {
     let id = $(this).attr('data-id')
     fetch(`/items/${id}.json`)
       .then(res => res.json())
-      .then(item => {
+      .then(data => {
       $('.button-container').html('')
-      let thisItem = new Item(item)
+      let thisItem = new Item(data['item'], data['loans'])
       let buttonHtml = thisItem.buttonFooterShow()
       $('.button-container').append(buttonHtml)
     })
@@ -104,14 +104,21 @@ const bindClickHandlers = () => {
       $('.form-container').append(formHtml)
     })
   })
+  //submit borrow form
+  $(document).on('click', '#submit', function(e) {
+    event.preventDefault();
+    var values = $(this).serialize();
+    var posting = $.post('/posts', values);
+    posting.done(function(data) {});
+  });
 }
 
-function Item(item) {
+function Item(item, loans) {
   this.id = item.id
   this.name = item.name
   this.available = item.available
   this.created_at = item.created_at
-  this.loans = item.loans
+  this.loans = loans
 }
 
 function Loan(loan) {
@@ -178,7 +185,7 @@ Item.prototype.showForm= function () {
   let formHtml = `
   <form>
     Using for: <input type="text" name="used_for"><br>
-    <button class="badge badge-success"><input type="submit" value="Borrow Item"></button>
+    <button class="badge badge-success" id="submit"><input type="submit" value="Borrow Item"></button>
   </form>
   `
   return formHtml

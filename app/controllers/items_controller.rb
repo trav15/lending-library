@@ -7,6 +7,7 @@ class ItemsController < ApplicationController
   def index
     @items = Item.is_available
     @borrowed = Item.is_borrowed
+    @user = current_user
     respond_to do |format|
       format.html { render :index }
       format.json { render json: @items}
@@ -30,7 +31,10 @@ class ItemsController < ApplicationController
 
   def next
     @next_item = @item.next
-    render json: @next_item
+    @loans = Loan.item_loans(@next_item)
+    render :json => {:item => @next_item,
+                                :user => @user,
+                                :loans => @loans }
   end
 
   def show
@@ -43,8 +47,10 @@ class ItemsController < ApplicationController
       @loaner = @loans.current_loan
       @user = current_user
       respond_to do |format|
-        format.html { render :show }
-        format.json { render json: @item}
+        format.html { render :index }
+        format.json { render :json => {:item => @item,
+                                    :user => @user,
+                                    :loans => @loans }}
       end
     end
   end
