@@ -91,6 +91,19 @@ const bindClickHandlers = () => {
       $('.button-container').append(buttonHtml)
     })
   })
+  //show borrow form
+  $(document).on('click', '.borrow-item', function(e) {
+    e.preventDefault();
+    let id = $(this).attr('data-id')
+    fetch(`/items/${id}.json`)
+      .then(res => res.json())
+      .then(item => {
+      $('.form-container').html('')
+      let thisItem = new Item(item)
+      let formHtml = thisItem.showForm()
+      $('.form-container').append(formHtml)
+    })
+  })
 }
 
 function Item(item) {
@@ -116,7 +129,10 @@ Item.prototype.formatIndex = function() {
 Item.prototype.formatShow = function() {
   let itemAvailablity = ''
   if (this.available == true) {
-    itemAvailablity = '<span class="badge badge-success">Available To Borrow</span>'
+    itemAvailablity = `
+    <span class="badge badge-success">Available To Borrow</span><br>
+    <div class="form-container"><button data-id="${this.id}" class="borrow-item badge badge-secondary">Borrow Item</button></div>
+  `
   }
   else {
     itemAvailablity = '<span class="badge badge-danger">Borrowed</span>'
@@ -156,4 +172,14 @@ Item.prototype.buttonFooterShow = function () {
   </div>
   `
   return buttonHtml
+}
+
+Item.prototype.showForm= function () {
+  let formHtml = `
+  <form>
+    Using for: <input type="text" name="used_for"><br>
+    <button class="badge badge-success"><input type="submit" value="Borrow Item"></button>
+  </form>
+  `
+  return formHtml
 }
