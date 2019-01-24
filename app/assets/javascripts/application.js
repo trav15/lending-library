@@ -87,7 +87,7 @@ const bindClickHandlers = () => {
       .then(item => {
       $('.button-container').html('')
       let thisItem = new Item(item)
-      let buttonHtml = thisItem.buttonFooter()
+      let buttonHtml = thisItem.buttonFooterShow()
       $('.button-container').append(buttonHtml)
     })
   })
@@ -143,6 +143,15 @@ Loan.prototype.formatLoans = function() {
 Item.prototype.buttonFooter = function () {
   let buttonHtml = `
   <button data-id="${this.id}" class="hide-loan-history badge badge-secondary">Hide Loan History</button><br>
+  <button data-id="${this.id}" class="next-item badge badge-secondary">Next Item</button>
+  </div>
+  `
+  return buttonHtml
+}
+
+Item.prototype.buttonFooterShow = function () {
+  let buttonHtml = `
+  <button data-id="${this.id}" class="loan-history badge badge-secondary">Show Loan History</button><br>
   <button data-id="${this.id}" class="next-item badge badge-secondary">Next Item</button>
   </div>
   `
