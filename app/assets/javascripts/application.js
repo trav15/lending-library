@@ -103,7 +103,7 @@ function Item(item) {
 
 function Loan(loan) {
   this.used_for = loan.used_for
-  this.return_date = loan.return_date
+  this.loan_date = loan.loan_date
 }
 
 Item.prototype.formatIndex = function() {
@@ -135,7 +135,7 @@ Item.prototype.formatShow = function() {
 
 Loan.prototype.formatLoans = function() {
   let loanHtml = `
-    <p class="list-group-item list-group-item-action">Returned ${this.return_date.replace(/(\d{4})\-(\d{2})\-(\d{2}).*/, '$2-$3-$1')}. Used for ${this.used_for}.</p>
+    <p class="list-group-item list-group-item-action">Borrowed ${this.loan_date.replace(/(\d{4})\-(\d{2})\-(\d{2}).*/, '$2-$3-$1')}. Used for ${this.used_for}.</p>
   `
   return loanHtml
 }
