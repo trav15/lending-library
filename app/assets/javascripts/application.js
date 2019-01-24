@@ -79,16 +79,18 @@ const bindClickHandlers = () => {
     })
   })
   //hide item loans
-  // $(document).on('click', '.hide-loan-history', function(e) {
-  //   e.preventDefault();
-  //   let id = $(this).attr('data-id')
-  //   fetch(`/items/${id}.json`)
-  //     .then(res => res.json())
-  //     .then(item => {
-  //     $('.button-container').html('')
-  //     $('.button-container').append(buttonFooter())
-  //   })
-  // })
+  $(document).on('click', '.hide-loan-history', function(e) {
+    e.preventDefault();
+    let id = $(this).attr('data-id')
+    fetch(`/items/${id}.json`)
+      .then(res => res.json())
+      .then(item => {
+      $('.button-container').html('')
+      let thisItem = new Item(item)
+      let buttonHtml = thisItem.buttonFooter()
+      $('.button-container').append(buttonHtml)
+    })
+  })
 }
 
 function Item(item) {
