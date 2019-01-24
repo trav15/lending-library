@@ -40,9 +40,9 @@ const bindClickHandlers = () => {
     let id = $(this).attr('data-id')
     fetch(`/items/${id}.json`)
       .then(res => res.json())
-      .then(data => {
+      .then(item => {
       $('.app-container').html('')
-      let newItem = new Item(data['item'], data['loans'])
+      let newItem = new Item(item, item.loans)
       let itemHtml = newItem.formatShow()
       $('.app-container').append(itemHtml)
     })
@@ -66,11 +66,13 @@ const bindClickHandlers = () => {
     let id = $(this).attr('data-id')
     fetch(`/items/${id}.json`)
     .then(res => res.json())
-    .then(data => {
+    .then(item => {
       $('.button-container').html('')
-      let thisItem = new Item(data['item'], data['loans'])
-      data['loans'].forEach((loan) => {
-        let newLoan = new Loan(loan)
+      let thisItem = new Item(item, item.loans)
+      item.loans.forEach((loan) => {
+        let loanUser = item.users.find( user => user.id === loan.user_id)
+        debugger
+        let newLoan = new Loan(loan, loanUser)
         let loanHtml = newLoan.formatLoans()
         $('.button-container').append(loanHtml)
       })
@@ -97,19 +99,25 @@ const bindClickHandlers = () => {
     let id = $(this).attr('data-id')
     fetch(`/items/${id}.json`)
       .then(res => res.json())
-      .then(item => {
+      .then(data => {
       $('.form-container').html('')
-      let thisItem = new Item(item)
-      let formHtml = thisItem.showForm()
+      let thisItem = new Item(data['item'], data['loans'])
+      let formHtml = thisItem.showForm(data['user'])
       $('.form-container').append(formHtml)
     })
   })
   //submit borrow form
   $(document).on('click', '#submit', function(e) {
-    event.preventDefault();
-    var values = $(this).serialize();
-    var posting = $.post('/posts', values);
-    posting.done(function(data) {});
+    e.preventDefault();
+    debugger
+    let values = $(this).serialize();
+    console.log('values', values)
+    // let loaning = $.post('/items/:item_id/loans', values);
+    // loaning.done(function(data) {
+    //   var loan = data;
+    //   $("#loanDate").text(loan["loan_date"]);
+    //   $("#usedFor").text(loan["used_for"]);
+    //   });
   });
 }
 
@@ -121,9 +129,12 @@ function Item(item, loans) {
   this.loans = loans
 }
 
-function Loan(loan) {
-  this.used_for = loan.used_for
-  this.loan_date = loan.loan_date
+class Loan{
+  constructor(loan, user) {
+    this.used_for = loan.used_for
+    this.loan_date = loan.loan_date
+    this.user = user
+  }
 }
 
 Item.prototype.formatIndex = function() {
@@ -158,7 +169,7 @@ Item.prototype.formatShow = function() {
 
 Loan.prototype.formatLoans = function() {
   let loanHtml = `
-    <p class="list-group-item list-group-item-action">Borrowed ${this.loan_date.replace(/(\d{4})\-(\d{2})\-(\d{2}).*/, '$2-$3-$1')}. Used for ${this.used_for}.</p>
+    <p class="list-group-item list-group-item-action">Borrowed by ${this.user.username} on ${this.loan_date.replace(/(\d{4})\-(\d{2})\-(\d{2}).*/, '$2-$3-$1')}. Used for ${this.used_for}.</p>
   `
   return loanHtml
 }
@@ -181,10 +192,12 @@ Item.prototype.buttonFooterShow = function () {
   return buttonHtml
 }
 
-Item.prototype.showForm= function () {
+Item.prototype.showForm= function (user) {
   let formHtml = `
   <form>
     Using for: <input type="text" name="used_for"><br>
+    <input type="hidden" value="${this.id}" name="item_id" />
+    <input type="hidden" value="${user.id}" name="user_id" />
     <button class="badge badge-success" id="submit"><input type="submit" value="Borrow Item"></button>
   </form>
   `

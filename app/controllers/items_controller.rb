@@ -45,12 +45,15 @@ class ItemsController < ApplicationController
       @loans = Loan.item_loans(@item)
       @loan = current_user.loans.find_or_initialize_by(item: @item, return_date: nil)
       @loaner = @loans.current_loan
-      @user = current_user
+      @current_user = current_user
       respond_to do |format|
         format.html { render :index }
-        format.json { render :json => {:item => @item,
-                                    :user => @user,
-                                    :loans => @loans }}
+        # format.json { render json: @item}
+        # format.json { render :json => {:item => @item,
+        #                             :current_user => @current_user}}
+        format.json { render json: @item.to_json(include: [:loans,
+          users: { only: [:id, :username]}])
+        }
       end
     end
   end

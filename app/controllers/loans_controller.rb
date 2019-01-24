@@ -12,6 +12,7 @@ class LoansController < ApplicationController
   end
 
   def create
+    raise params.inspect
     @item = Item.find_by(id: params[:loan][:item_id])
     @loan = current_user.loans.find_or_initialize_by(item_id: params[:item_id], return_date: nil)
     @loan.update(loan_params)
@@ -24,6 +25,7 @@ class LoansController < ApplicationController
       flash[:errors] = "Sorry, something went wrong!"
       redirect_to item_path(@item)
     end
+    render json: @loan, status: 201
   end
 
   def index
