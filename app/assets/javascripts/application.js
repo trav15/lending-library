@@ -71,7 +71,6 @@ const bindClickHandlers = () => {
       let thisItem = new Item(item, item.loans)
       item.loans.forEach((loan) => {
         let loanUser = item.users.find( user => user.id === loan.user_id)
-        debugger
         let newLoan = new Loan(loan, loanUser)
         let loanHtml = newLoan.formatLoans()
         $('.button-container').append(loanHtml)
@@ -86,9 +85,9 @@ const bindClickHandlers = () => {
     let id = $(this).attr('data-id')
     fetch(`/items/${id}.json`)
       .then(res => res.json())
-      .then(data => {
+      .then(item => {
       $('.button-container').html('')
-      let thisItem = new Item(data['item'], data['loans'])
+      let thisItem = new Item(item, item.loans)
       let buttonHtml = thisItem.buttonFooterShow()
       $('.button-container').append(buttonHtml)
     })
