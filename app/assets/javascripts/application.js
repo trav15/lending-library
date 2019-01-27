@@ -34,7 +34,7 @@ const bindClickHandlers = () => {
         })
       })
   })
-  
+
   //show item
   $(document).on('click', '.show-link', function(e) {
     e.preventDefault();
@@ -141,18 +141,21 @@ Item.prototype.formatShow = function() {
   if (this.available == true) {
     itemAvailablity = `
     <span class="badge badge-success">Available To Borrow</span><br>
-    <div class="form-container"><button data-id="${this.id}" class="borrow-item badge badge-secondary">Borrow Item</button></div>
-  `
-  }
+  `}
   else {
     itemAvailablity = '<span class="badge badge-danger">Borrowed</span>'
   }
+  let showLoanHistoryButton = ''
+  if (this.loans.length > 0) {
+    showLoanHistoryButton = `
+    <button data-id="${this.id}" class="loan-history badge badge-secondary">Show Loan History</button><br>
+    `}
   let itemHtml = `
     <h3>${this.name}</h3>
     ${itemAvailablity}<br>
     <p>Times borrowed: ${this.loans.length}</p>
     <div class="button-container">
-    <button data-id="${this.id}" class="loan-history badge badge-secondary">Show Loan History</button><br>
+    ${showLoanHistoryButton}
     <button data-id="${this.id}" class="next-item badge badge-secondary">Next Item</button>
     </div>
   `
