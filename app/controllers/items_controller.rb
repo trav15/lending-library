@@ -22,10 +22,13 @@ class ItemsController < ApplicationController
   def create
     @item = Item.create(item_params)
     if @item.save
-      flash[:message] = "Item successfully donated! Thank you!"
-      redirect_to item_path(@item)
+      respond_to do |format|
+        format.json { render json: @item, status: 201 }
+        format.html { flash[:message] = "Item successfully donated! Thank you!"
+        redirect_to item_path(@item) }
+      end
     else
-      render :news
+      render :new
     end
   end
 
@@ -45,13 +48,10 @@ class ItemsController < ApplicationController
       @loans = Loan.item_loans(@item)
       @loan = current_user.loans.find_or_initialize_by(item: @item, return_date: nil)
       @loaner = @loans.current_loan
-      @current_user = current_user
+      @item.donor_id = current_user.id
       respond_to do |format|
         format.html { render :index }
-        # format.json { render json: @item}
-        # format.json { render :json => {:item => @item,
-        #                             :current_user => @current_user}}
-        format.json { render json: @item.to_json(include: [:loans,
+        format.json { render json: @item.to_json(:except => [:created_at, :updated_at], include: [:loans,
           users: { only: [:id, :username]}])
         }
       end

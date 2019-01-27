@@ -92,32 +92,39 @@ const bindClickHandlers = () => {
       $('.button-container').append(buttonHtml)
     })
   })
-  //show borrow form
-  $(document).on('click', '.borrow-item', function(e) {
-    e.preventDefault();
-    let id = $(this).attr('data-id')
-    fetch(`/items/${id}.json`)
-      .then(res => res.json())
-      .then(data => {
-      $('.form-container').html('')
-      let thisItem = new Item(data['item'], data['loans'])
-      let formHtml = thisItem.showForm(data['user'])
-      $('.form-container').append(formHtml)
-    })
-  })
-  //submit borrow form
-  $(document).on('click', '#submit', function(e) {
-    e.preventDefault();
-    debugger
-    let values = $(this).serialize();
-    console.log('values', values)
-    // let loaning = $.post('/items/:item_id/loans', values);
-    // loaning.done(function(data) {
-    //   var loan = data;
-    //   $("#loanDate").text(loan["loan_date"]);
-    //   $("#usedFor").text(loan["used_for"]);
-    //   });
-  });
+  //show new item form
+  // $(document).on('click', '.donate-item', function(e) {
+  //   e.preventDefault();
+  //   let id = $(this).attr('data-id')
+  //   fetch(`/items.json`)
+  //     .then(res => res.json())
+  //     .then(items => {
+  //     $('.donate-container').html('')
+  //     let thisItem = new Item(items, items.loans)
+  //     let formHtml = thisItem.newItemForm(items.donor_id)
+  //     $('.donate-container').append(formHtml)
+  //   })
+  // })
+  //submit donation form
+  $('form').submit( function(event) {
+    event.preventDefault();
+    let values = $(this).serialize()
+    let donation = $.post('/items', values)
+    donation.done(function(data) {
+      alert("DONE")
+      var item = data;
+      let newItem = new Item(item)
+      let itemHtml = newItem.formatIndex()
+      $('.app-container').append('<h3>Thank you for your donation!</h3>')
+      $('.app-container').append(itemHtml)
+      // $('.app-container').append(`
+      //   <button class="btn btn-primary all-items">See Items</button>
+      //   <div id="postResult">
+      //     <p id="itemName"></p>
+      //   </div>`
+      // )
+      });
+   })
 }
 
 function Item(item, loans) {
@@ -191,13 +198,11 @@ Item.prototype.buttonFooterShow = function () {
   return buttonHtml
 }
 
-Item.prototype.showForm= function (user) {
+Item.prototype.newItemForm= function (user) {
   let formHtml = `
-  <form>
-    Using for: <input type="text" name="used_for"><br>
-    <input type="hidden" value="${this.id}" name="item_id" />
-    <input type="hidden" value="${user.id}" name="user_id" />
-    <button class="badge badge-success" id="submit"><input type="submit" value="Borrow Item"></button>
+  <form class="new-item-form">
+    Item name: <input type="text" id="item_name"><br>
+    <input type="submit" class="new-item" value="Donate Item">
   </form>
   `
   return formHtml
