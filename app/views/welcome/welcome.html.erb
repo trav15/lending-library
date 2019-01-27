@@ -13,6 +13,7 @@
     <div class="field">
       <%= f.label :name %><br>
       <%= f.text_field :name %>
+      <%= f.hidden_field :available, value: true %>
     </div>
     <div class="actions">
       <%= f.submit %>
