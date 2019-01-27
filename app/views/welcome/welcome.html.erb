@@ -1,2 +1,21 @@
-<h2>Welcome to your lending library!</h2>
-<button class="btn btn-primary all-items">Borrow Something</button>
+<div class="app-container">
+  <h2>Welcome to your lending library!</h2>
+  <button class="btn btn-primary all-items">See Items</button>
+  <div id="postResult">
+    <p id="itemName"></p>
+  </div>
+</div>
+<br>
+<br>
+<div class="app-footer card card-body" style="width: 18rem;">
+  <h4>Donate an item to the library</h4>
+  <%= form_for(@item) do |f| %>
+    <div class="field">
+      <%= f.label :name %><br>
+      <%= f.text_field :name %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  <% end %>
+</div>
