@@ -24,5 +24,4 @@ class Item < ApplicationRecord
       Item.first
     end
   end
-
 end
