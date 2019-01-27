@@ -109,6 +109,9 @@ const bindClickHandlers = () => {
       let itemHtml = newItem.formatIndex()
       $('.app-container').append('<h3>Thank you for your donation!</h3>')
       $('.app-container').append(itemHtml)
+      // $('input[type="text"]').val('');
+      $('#donationForm')[0].reset();
+      $('.donate-item').removeAttr('disabled')
       });
    })
 }
