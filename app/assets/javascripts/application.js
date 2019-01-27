@@ -34,6 +34,7 @@ const bindClickHandlers = () => {
         })
       })
   })
+  
   //show item
   $(document).on('click', '.show-link', function(e) {
     e.preventDefault();
@@ -47,6 +48,7 @@ const bindClickHandlers = () => {
       $('.app-container').append(itemHtml)
     })
   })
+
   //next item
   $(document).on('click', '.next-item', function(e) {
     e.preventDefault();
@@ -60,6 +62,7 @@ const bindClickHandlers = () => {
       $('.app-container').append(itemHtml)
     })
   })
+
   //show item loans
   $(document).on('click', '.loan-history', function(e) {
     e.preventDefault();
@@ -79,6 +82,7 @@ const bindClickHandlers = () => {
       $('.button-container').append(buttonHtml)
     })
   })
+
   //hide item loans
   $(document).on('click', '.hide-loan-history', function(e) {
     e.preventDefault();
@@ -92,19 +96,7 @@ const bindClickHandlers = () => {
       $('.button-container').append(buttonHtml)
     })
   })
-  //show new item form
-  // $(document).on('click', '.donate-item', function(e) {
-  //   e.preventDefault();
-  //   let id = $(this).attr('data-id')
-  //   fetch(`/items.json`)
-  //     .then(res => res.json())
-  //     .then(items => {
-  //     $('.donate-container').html('')
-  //     let thisItem = new Item(items, items.loans)
-  //     let formHtml = thisItem.newItemForm(items.donor_id)
-  //     $('.donate-container').append(formHtml)
-  //   })
-  // })
+
   //submit donation form
   $('form').submit( function(event) {
     event.preventDefault();
@@ -117,12 +109,6 @@ const bindClickHandlers = () => {
       let itemHtml = newItem.formatIndex()
       $('.app-container').append('<h3>Thank you for your donation!</h3>')
       $('.app-container').append(itemHtml)
-      // $('.app-container').append(`
-      //   <button class="btn btn-primary all-items">See Items</button>
-      //   <div id="postResult">
-      //     <p id="itemName"></p>
-      //   </div>`
-      // )
       });
    })
 }
