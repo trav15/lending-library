@@ -128,18 +128,20 @@ const bindClickHandlers = () => {
   })
 }
 
-function Item(item, loans) {
-  this.id = item.id
-  this.name = item.name
-  this.available = item.available
-  this.created_at = item.created_at
-  this.loans = loans
+class Item{
+  constructor(item, loans) {
+    this.id = item.id
+    this.name = item.name
+    this.available = item.available
+    this.createdAt = item.created_at
+    this.loans = loans
+  }
 }
 
 class Loan{
   constructor(loan, user) {
-    this.used_for = loan.used_for
-    this.loan_date = loan.loan_date
+    this.usedFor = loan.used_for
+    this.loanDate = loan.loan_date
     this.user = user
   }
 }
@@ -180,7 +182,7 @@ Item.prototype.formatShow = function() {
 
 Loan.prototype.formatLoans = function() {
   let loanHtml = `
-    <p class="list-group-item list-group-item-action">Borrowed by ${this.user.username} on ${this.loan_date.replace(/(\d{4})\-(\d{2})\-(\d{2}).*/, '$2-$3-$1')}. Used for ${this.used_for}.</p>
+    <p class="list-group-item list-group-item-action">Borrowed by ${this.user.username} on ${this.loanDate.replace(/(\d{4})\-(\d{2})\-(\d{2}).*/, '$2-$3-$1')}. Used for ${this.usedFor}.</p>
   `
   return loanHtml
 }
