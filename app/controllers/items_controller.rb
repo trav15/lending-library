@@ -50,7 +50,7 @@ class ItemsController < ApplicationController
       @loaner = @loans.current_loan
       @item.donor_id = current_user.id
       respond_to do |format|
-        format.html { render :index }
+        format.html { render :show }
         format.json { render json: @item.to_json(:except => [:created_at, :updated_at], include: [:loans,
           users: { only: [:id, :username]}])
         }
