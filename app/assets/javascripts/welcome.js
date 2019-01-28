@@ -1,7 +1,3 @@
-$(() => {
-  bindClickHandlers();
-})
-
 const bindClickHandlers = () => {
   //item index
   $('.all-items').on('click', (e) => {
@@ -9,7 +5,35 @@ const bindClickHandlers = () => {
     fetch('/items.json')
       .then(res => res.json())
       .then(items => {
-        $('.app-container').html('<h2>Items Available To Borrow</h2>')
+        $('.app-container').html(`
+          <h2>Items Available To Borrow</h2>
+          <button class="badge badge-secondary sort-a-z">Sort Alphabetically</button><br><br>
+          `)
+        items.forEach((item) => {
+          let newItem = new Item(item)
+          let itemHtml = newItem.formatIndex()
+          $('.app-container').append(itemHtml)
+        })
+      })
+  })
+  //sort index alphabetically
+  $(document).on('click', '.sort-a-z', function(e) {
+    e.preventDefault();
+    fetch('/items.json')
+      .then(res => res.json())
+      .then(items => {
+        items.sort(function(a, b) {
+          var nameA = a.name.toUpperCase();
+          var nameB = b.name.toUpperCase();
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+          return 0;
+        });
+        $('.app-container').html('<h2>Items Available To Borrow</h2><p>Sorted Alphabetically</p>')
         items.forEach((item) => {
           let newItem = new Item(item)
           let itemHtml = newItem.formatIndex()
@@ -188,3 +212,5 @@ Item.prototype.newItemForm= function (user) {
   `
   return formHtml
 }
+
+$(bindClickHandlers)
