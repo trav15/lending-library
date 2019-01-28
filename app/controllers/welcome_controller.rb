@@ -1,5 +1,9 @@
 class WelcomeController < ApplicationController
   def welcome
-    @item = Item.new
+    if logged_in?
+      @item = Item.new
+    else
+      render :login
+    end
   end
 end
