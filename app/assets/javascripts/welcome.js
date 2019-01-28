@@ -14,7 +14,7 @@ const bindClickHandlers = () => {
     fetch('/items.json')
       .then(res => res.json())
       .then(items => {
-        $('.app-container').html('')
+        $('.app-container').html('<h2>Items Available To Borrow</h2>')
         items.forEach((item) => {
           let newItem = new Item(item)
           let itemHtml = newItem.formatIndex()
@@ -137,6 +137,7 @@ Item.prototype.formatShow = function() {
   if (this.available == true) {
     itemAvailablity = `
     <span class="badge badge-success">Available To Borrow</span><br>
+    <a class="badge badge-secondary" href='/items/${this.id}/loans/new'>Borrow Item</a>
   `}
   else {
     itemAvailablity = '<span class="badge badge-danger">Borrowed</span>'
