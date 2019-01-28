@@ -1,8 +1,3 @@
-// $(document).ready(() => {
-//   alert("In Items.js")
-// }
-
-
 $(() => {
   bindClickHandlers();
 })
